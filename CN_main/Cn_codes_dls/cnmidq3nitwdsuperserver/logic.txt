@@ -1,0 +1,15 @@
+the main server (serverCItM.c) listens on 2 ports
+execs s1.c or creates a thread(for s2) depending on  the request
+
+limit :
+
+it maintains a count to indicate no of clients currently server by each server ..
+count is incremented b4 accepting the request.
+once the request is served the corresponding server(s1 or thread) signals the main server and the mainserver decrements the count.
+a request is only accepted if the count(no of clients  currently servered) is less than the limit(total no of clients that can be served at a time).
+
+about dup2 :
+
+since we should retain stdin and stdout we save it b4 duping it with nsfd and send it as argument to the exec call ..for s1
+we can now retain stdin and stdout by duping it again(check code)
+

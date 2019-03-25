@@ -1,0 +1,14 @@
+editor popens a document writer
+editor is connected to reporters using 3 fifos
+(dup2 the fifo id with 1)
+whenever reporter sends /d , editor sends the name of corresponding fifo to document writer and docwriter opens that fifo and reads 
+further msgs sent that reporter.
+editor sends the msgs to n1 and n2 alternatively using msgqueue(type 1 and 2)
+editor has a shared memory variable to maitain the count of live telecast.
+whenever there is a live telecast , news reader sends a msg(using the same message queue type 3) to editor and then editor increments the count of the shared variable.
+N1 and N2 has each others pid , (which they sent and recieved using same msg queue -- type 4 and 5)
+n1 and n2 sends reports to the screen using fifo which screen displays
+if there is a live telecast , in n1 .. it signals n2(as it already has pid of n2) b4 the start of telecast
+now n2 stops reading msgs from msgqueue.
+after the live telecast gets over ..n1 sends another signal to n2 now n2 continues to read the msgs.
+

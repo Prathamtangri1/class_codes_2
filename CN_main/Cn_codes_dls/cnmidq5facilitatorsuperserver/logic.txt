@@ -1,0 +1,10 @@
+--with out using setsockopt
+
+initially F has a UDP port
+when we give i/p of the form portno,pathname (7100,./ss1)
+it creates a socket , binds listens and then execs the file (./ss1) by sending socket file descriptor as argument
+whenever there is a client requesting for that service it sends the signal to s1 .. s1 handles the signal by accepting , creating thread and then serving the client using thread 
+(info abt s1 i.e., path name is saved for sending info abt this to client)
+
+
+serClient.c -- client which requests F using the UDP port and F sends the list of all services available , F saves the client address and sends the info to client incase a new service is added using signal handler (when a new service is available (7100,./ss1) , it sends a signal to itself which is handled by info to all clients)
